@@ -1,11 +1,7 @@
-## My Project
+## CDKConstructs
 
-TODO: Fill this README out!
+This package extends common CDK constructs for use in your organizations services. The `service-constructs` folder provides constructs for some of the more commonly used AWS services with opinionated best practices. the `documentation` folder provides an overview of each construct and details around defaults and usage. 
 
-Be sure to:
-
-* Change the title in this README
-* Edit your repository description on GitHub
 
 ## Security
 

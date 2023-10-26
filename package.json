@@ -1,0 +1,114 @@
+{
+  "name": "@amzn/cdk-constructs",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
+  "scripts": {
+    "prebuild": "node -p \\\"'// This file is generated automatically during npm pre-build. Any modifications will be overwritten.\\\\n\\\\nexport const LIB_VERSION = \\\\'$(npm --silent run get-version)\\\\';'\\\" > service-constructs/version.ts",
+    "build": "jsii && npm run copy-files",
+    "clean": "npm run clean:artifacts && npm run clean:dependencies && npm run clean:build",
+    "get-version": "[[ $NODE_ENV = test ]] && echo 5.45.0 || echo $npm_package_version",
+    "clean:artifacts": "rm -f $(find service-constructs test assets -type f -name '*.js' -o -name '*.d.ts')",
+    "clean:build": "rm -rf dist && rm -rf build && rm -rf .jsii && rm -f tsconfig.json",
+    "clean:dependencies": "rm -rf node_modules",
+    "lint": "eslint 'service-constructs/**/*.ts' 'test/**/*.ts' 'assets/**/*.ts' --fix --ignore-pattern '**/*.d.ts'",
+    "pretest": "export NODE_ENV=test || set NODE_ENV=test && npm run build && npm run lint",
+    "test": "BRAZIL_PACKAGE_VERSION=1 NODE_OPTIONS=--max-old-space-size=8192 jest --silent --maxWorkers=25%",
+    "posttest": "generate-coverage-data -language typescript",
+    "prepublishOnly": "npm run build && npm run lint",
+    "watch": "jsii -w"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "npm-pretty-much": {
+    "ciBuild": "always",
+    "runTest": "release"
+  },
+  "dependencies": {
+    "@aws-sdk/client-resource-groups-tagging-api": "3.360.0",
+    "@types/aws-lambda": "^8.10.101",
+    "@types/jest": "^27.4.1",
+    "aws-embedded-metrics": "^4.0.0",
+    "aws-sdk": "^2.952.0",
+    "js-yaml": "3.13.1",
+    "openapi-types": "^7.2.3",
+    "yaml": "^2.3.2"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "3.12.1",
+    "@types/node": "*",
+    "@types/prettier": "2.6.0",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "ajv": "8.12.0",
+    "aws-cdk": "^2.87.0",
+    "aws-cdk-lib": "^2.87.0",
+    "compressjs": "^1.0.3",
+    "constructs": "^10.0.79",
+    "esbuild": "^0.17.18",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-webpack-plugin": "^2.5.2",
+    "jest": "^27.4.1",
+    "jsii": "~1.80.0",
+    "ts-jest": "27.0.0",
+    "typescript": "~4.2.0",
+    "webpack": "^5.88.2"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.87.0",
+    "constructs": "^10.0.79"
+  },
+  "bundleDependencies": [
+    "@aws-sdk/client-resource-groups-tagging-api",
+    "@types/aws-lambda",
+    "@types/jest",
+    "aws-embedded-metrics",
+    "aws-sdk",
+    "js-yaml",
+    "openapi-types",
+    "yaml"
+  ],
+  "author": {
+    "name": "amazon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.aws.dev/santos-sa/cdk-constructs"
+  },
+  "jsii": {
+    "excludeTypescript": [
+      "build/*"
+    ],
+    "outdir": "generated",
+    "targets": {
+      "java": {
+        "package": "software.amazon.amzn.cdkconstructs",
+        "maven": {
+          "groupId": "software.amazon.amzn.cdkconstructs",
+          "artifactId": "cdk-constructs"
+        }
+      }
+    },
+    "tsc": {
+      "outDir": "./dist",
+      "rootDir": "./"
+    }
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "files": [
+    "!.eslintrc",
+    "!coverage",
+    "!dist/test",
+    "!global.d.ts",
+    "!jest.config.js",
+    ".jsii",
+    "dist/**/*.d.ts",
+    "dist/**/*.js"
+  ]
+}
